@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Texture2DDecoderNative.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="x64\Texture2DDecoderNative.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="protobuf-net" Version="3.0.101" />
+    <PackageReference Include="SevenZip" Version="19.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AssetStudio\AssetStudio.PInvoke\AssetStudio.PInvoke.csproj" />
+    <ProjectReference Include="..\AssetStudio\AssetStudioFBXWrapper\AssetStudioFBXWrapper.csproj" />
+    <ProjectReference Include="..\AssetStudio\AssetStudioUtility\AssetStudioUtility.csproj" />
+    <ProjectReference Include="..\AssetStudio\AssetStudio\AssetStudio.csproj" />
+    <ProjectReference Include="..\AssetStudio\Texture2DDecoderWrapper\Texture2DDecoderWrapper.csproj" />
+  </ItemGroup>
+
+</Project>
