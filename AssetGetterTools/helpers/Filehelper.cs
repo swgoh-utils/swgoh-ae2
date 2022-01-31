@@ -119,6 +119,8 @@ namespace AssetGetterTools
 
             var fulFileName = $"{dllDir}\\Texture2DDecoderNative.dll";
 
+            Console.WriteLine($"Chekcing for file {fulFileName}");
+
             if (!File.Exists(fulFileName))
             {
                 throw new Exception($"The File Texture2DDecoderNative.dll could not be found. Make sure it exists in the folder '{dllDir}'");
