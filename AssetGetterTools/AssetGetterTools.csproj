@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="x64\Texture2DDecoderNative.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 
