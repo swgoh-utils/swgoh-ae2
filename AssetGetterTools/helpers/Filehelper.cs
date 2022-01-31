@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using AssetStudio;
+using AssetStudio.PInvoke;
 using AssetStudioGUI;
 
 namespace AssetGetterTools
@@ -11,6 +13,11 @@ namespace AssetGetterTools
     {
         public string workingFolder { get; set; }
         public static List<AssetItem> exportableAssets = new List<AssetItem>();
+
+        public Filehelper()
+        {
+            verifytextureDLLisReady();
+        }
 
         public void UnpackBundle(string inFile, string targetFolder, string assetName)
         {
@@ -104,6 +111,30 @@ namespace AssetGetterTools
                 var result = Exporter.ExportConvertFile(exportAbleAsset, $"{targetFolder}/{assetName}");
             }
 
+        }
+
+        public void verifytextureDLLisReady()
+        {
+            var dllDir = GetDirectedDllDirectory();
+
+            var fulFileName = $"{dllDir}\\Texture2DDecoderNative.dll";
+
+            if (!File.Exists(fulFileName))
+            {
+                throw new Exception($"The File Texture2DDecoderNative.dll could not be found. Make sure it exists in the folder '{dllDir}'");
+            }
+        }
+
+        private static string GetDirectedDllDirectory()
+        {
+            var localPath = Process.GetCurrentProcess().MainModule.FileName;
+            var localDir = Path.GetDirectoryName(localPath);
+
+            var subDir = Environment.Is64BitProcess ? "x64" : "x86";
+
+            var directedDllDir = Path.Combine(localDir, subDir);
+
+            return directedDllDir;
         }
 
     }
