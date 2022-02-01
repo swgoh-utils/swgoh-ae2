@@ -108,7 +108,7 @@ namespace AssetGetterTools
 
             foreach (var exportAbleAsset in exportableAssets)
             {
-                var result = Exporter.ExportConvertFile(exportAbleAsset, $"{targetFolder}/{assetName}");
+                var result = Exporter.ExportConvertFile(exportAbleAsset, $"{targetFolder}");
             }
 
         }
@@ -119,7 +119,7 @@ namespace AssetGetterTools
 
             var fulFileName = $"{dllDir}\\Texture2DDecoderNative.dll";
 
-            Console.WriteLine($"Chekcing for file {fulFileName}");
+            Console.WriteLine($"Checking for file {fulFileName}");
 
             if (!File.Exists(fulFileName))
             {
