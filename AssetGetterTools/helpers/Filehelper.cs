@@ -19,7 +19,7 @@ namespace AssetGetterTools
             verifytextureDLLisReady();
         }
 
-        public void UnpackBundle(string inFile, string targetFolder, string assetName)
+        public void UnpackBundle(string inFile, string targetFolder, string assetName, bool exportShader = false, bool exportMeshes = false, bool exportAnimator = false, bool exportMonoBehavior = false)
         {
             Directory.CreateDirectory(targetFolder);
 
@@ -62,7 +62,7 @@ namespace AssetGetterTools
                             break;
                         case Shader m_Shader:
                             assetItem.Text = m_Shader.m_ParsedForm?.m_Name ?? m_Shader.m_Name;
-                            exportable = false;
+                            exportable = exportShader;
                             break;
                         case Mesh _:
                         case TextAsset _:
@@ -71,14 +71,14 @@ namespace AssetGetterTools
                         case MovieTexture _:
                         case Sprite _:
                             assetItem.Text = ((NamedObject)asset).m_Name;
-                            exportable = false;
+                            exportable = exportMeshes;
                             break;
                         case Animator m_Animator:
                             if (m_Animator.m_GameObject.TryGet(out var gameObject))
                             {
                                 assetItem.Text = gameObject.m_Name;
                             }
-                            exportable = false;
+                            exportable = exportAnimator;
                             break;
                         case MonoBehaviour m_MonoBehaviour:
                             if (m_MonoBehaviour.m_Name == "" && m_MonoBehaviour.m_Script.TryGet(out var m_Script))
@@ -89,7 +89,7 @@ namespace AssetGetterTools
                             {
                                 assetItem.Text = m_MonoBehaviour.m_Name;
                             }
-                            exportable = false;
+                            exportable = exportMonoBehavior;
                             break;
                         case NamedObject m_NamedObject:
                             assetItem.Text = m_NamedObject.m_Name;
