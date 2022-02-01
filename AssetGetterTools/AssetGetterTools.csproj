@@ -14,10 +14,14 @@
 
   <ItemGroup>
     <None Remove="Texture2DDecoderNative.dll" />
+    <None Remove="x86\Texture2DDecoderNative.dll" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="x64\Texture2DDecoderNative.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x86\Texture2DDecoderNative.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
