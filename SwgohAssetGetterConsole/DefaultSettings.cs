@@ -11,6 +11,7 @@ namespace SwgohAssetGetterConsole
         public string workingDirectory { get; set; }
         public string defaultOutputDirectory { get; set; }
         public string defaultAssetVersion { get; set; }
+        public bool exportMeshes { get; set; }
 
         public static DefaultSettings GetDefaultSettings()
         {

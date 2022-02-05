@@ -17,6 +17,8 @@ namespace SwgohAssetGetterConsole
         public string targetFolder { get; set; }
         public string AssetVersion { get; set; }
 
+        public bool exportMeshes { get; set; }
+
         public string AssetDownloadUrl
         {
             get
@@ -34,6 +36,7 @@ namespace SwgohAssetGetterConsole
             this.workingFolder = defaultSettings.workingDirectory;
             this.targetFolder = defaultSettings.defaultOutputDirectory;
             this.AssetVersion = defaultSettings.defaultAssetVersion;
+            this.exportMeshes = defaultSettings.exportMeshes;
 
             this.fileHelper = new Filehelper();
             this.fileHelper.workingFolder = defaultSettings.workingDirectory;
@@ -123,7 +126,7 @@ namespace SwgohAssetGetterConsole
             {
                 var prefix = assetName.Split('_')[0];
                 var downloadedFile = DownloadAssetBundle(assetName);
-                fileHelper.UnpackBundle(downloadedFile, $"{targetFolder}/{prefix}", assetName);
+                fileHelper.UnpackBundle(downloadedFile, $"{targetFolder}/{prefix}", assetName, false, this.exportMeshes);
             }
             catch (Exception ex)
             {

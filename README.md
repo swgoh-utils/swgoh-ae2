@@ -35,15 +35,19 @@ Downloads and extracts all Assets from the current Manifest
 # Optional Parameters  
 **-version**  
 **-v**  
-Sets the target assetversion for this run only
+Sets the target assetversion for this run only it overrides the default from settings.json
 
 **-target**  
 **-t**  
-Sets the target Targetfolder(outputfolder) for this run only
+Sets the target Targetfolder(outputfolder) for this run only it overrides the default from settings.json
 
 **-workingfolder**  
 **-w**  
-Sets the target Workingfolder for this run only  
+Sets the target Workingfolder for this run only it overrides the default from settings.json
+
+**-ExportMeshes**  
+**-eM**  
+Sets the parameter that defines if Meshes are downloaded or not. For this run only it overrides the default from settings.json
 
 # .NetCore usage:
 similar to windows usage. Just call the dll with dotnet instead of the exe:  

@@ -159,21 +159,26 @@ namespace SwgohAssetGetterConsole
                                     redownloadManifestAutomation = true;
                                 }
                                 mainProgram.AssetVersion = currentParameter;
-                                Console.WriteLine($"Assetversion setted to: {currentParameter}");
+                                Console.WriteLine($"Assetversion setted to: {mainProgram.AssetVersion}");
                                 break;
                             case "-Target":
                             case "-target":
                             case "-T":
                             case "-t":
                                 mainProgram.targetFolder = currentParameter;
-                                Console.WriteLine($"TargetFolder setted to: {currentParameter}");
+                                Console.WriteLine($"TargetFolder setted to: {mainProgram.targetFolder}");
                                 break;
                             case "-Workingfolder":
                             case "-workingfolder":
                             case "-W":
                             case "-w":
                                 mainProgram.workingFolder = currentParameter;
-                                Console.WriteLine($"Workingfolder setted to: {currentParameter}");
+                                Console.WriteLine($"Workingfolder setted to: {mainProgram.workingFolder}");
+                                break;
+                            case "-ExportMeshes":
+                            case "-eM":
+                                mainProgram.exportMeshes = (currentParameter == "true" || currentParameter == "t");
+                                Console.WriteLine($"exportMeshes setted to: {mainProgram.exportMeshes}");
                                 break;
                             default:
                                 Console.WriteLine($"Unknown Argument '{currentArg}'");
