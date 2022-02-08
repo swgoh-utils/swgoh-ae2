@@ -1,0 +1,6 @@
+{
+  "workingDirectory": "\\AssetBundles\\",
+  "defaultOutputDirectory": "\\AssetBundles\\OutPut",
+  "defaultAssetVersion": "2710",
+  "exportMeshes":  false
+}
