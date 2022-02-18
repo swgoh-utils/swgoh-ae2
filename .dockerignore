@@ -1,0 +1,7 @@
+.git
+.gitattributes
+.gitignore
+.gitmodules
+Dockerfile
+.dockerignore
+README.md

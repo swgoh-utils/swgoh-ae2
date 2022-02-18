@@ -117,7 +117,7 @@ namespace AssetGetterTools
         {
             var dllDir = GetDirectedDllDirectory();
 
-            var fulFileName = $"{dllDir}\\Texture2DDecoderNative.dll";
+            var fulFileName = $"{dllDir}/Texture2DDecoderNative.dll";
 
             Console.WriteLine($"Checking for file {fulFileName}");
 

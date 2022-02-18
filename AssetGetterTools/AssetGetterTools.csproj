@@ -21,6 +21,9 @@
     <EmbeddedResource Include="x64\Texture2DDecoderNative.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="x64\libTexture2DDecoderNative.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="x86\Texture2DDecoderNative.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
