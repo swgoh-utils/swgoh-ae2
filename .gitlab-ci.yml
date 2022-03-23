@@ -6,6 +6,8 @@ variables:
   CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
   CONTAINER_BRANCH_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+  # recursively initialize submodules
+  GIT_SUBMODULE_STRATEGY: recursive
 
 docker-build:
   image: docker:latest
