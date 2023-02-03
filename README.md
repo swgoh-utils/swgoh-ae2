@@ -3,15 +3,15 @@ This Program can download and extract SWGoH 2D Textures.
 
 ## Docker
 
-Docker images are automatically built and publish to gitlab's registry.  You can pull down an image and get started immediately using something like this:
+Docker images are automatically built and publish to github's container registry.  You can pull down an image and get started immediately using something like this:
 
 ```
-docker pull registry.gitlab.com/swgoh-tools/swgoh-ae2:latest
+docker pull ghcr.io/swgoh-utils/swgoh-ae2:latest
 docker run --name=swgoh-ae2 \
   -d \
   -restart always \
-  -p 3000:3000 \
-  swgoh-ae2
+  -p 3000:80 \
+  ghcr.io/swgoh-utils/swgoh-ae2:latest
 ```
 
 ### Open API / Swagger file
