@@ -189,7 +189,7 @@ namespace SwgohAssetGetterConsole
 
         public string GetPathToManifestAndDownloadIfNotExists()
         {
-            var pathToManifest = $"{workingFolder}/Manifest/manifest.data";
+            var pathToManifest = $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data";
 
             if (!File.Exists(pathToManifest))
             {

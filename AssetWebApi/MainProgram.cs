@@ -89,7 +89,7 @@ namespace AssetWebApi
             }
         }
 
-        public List<string> diffAssetVersions(string oldVersion, DiffType diffType = DiffType.All)
+        public List<string> diffAssetVersions(string oldVersion, DiffType diffType = DiffType.All, string prefix = null)
         {
             var pathToManifest = GetPathToManifestAndDownloadIfNotExists();
             ManifestHelper manifestHelper = new ManifestHelper();
@@ -107,17 +107,30 @@ namespace AssetWebApi
             ManifestHelper manifestHelperOld = new ManifestHelper();
             manifestHelperOld.ReadFromFile(pathToDiffManifest);
 
+            List<string> result = null;
+
             switch (diffType)
             {
                 case DiffType.All:
-                    return manifestHelperOld.DiffBundles(manifestHelper);
+                    result = manifestHelperOld.DiffBundles(manifestHelper);
+                    break;
                 case DiffType.New:
-                    return manifestHelperOld.DiffNewlyAddedBundles(manifestHelper);
+                    result = manifestHelperOld.DiffNewlyAddedBundles(manifestHelper);
+                    break;
                 case DiffType.Changed:
-                    return manifestHelperOld.DiffChangedBundles(manifestHelper);
+                    result = manifestHelperOld.DiffChangedBundles(manifestHelper);
+                    break;
                 default:
-                    return manifestHelperOld.DiffBundles(manifestHelper);
+                    result = manifestHelperOld.DiffBundles(manifestHelper);
+                    break;
             }
+
+            if(prefix != null)
+            {
+                result.RemoveAll(x => x.Split('_').FirstOrDefault() != prefix);
+            }
+
+            return result;
         }
 
         public string getSingleTextureIfExists(string assetName, bool forceReDownload = false)
@@ -172,7 +185,7 @@ namespace AssetWebApi
             using (var client = new WebClient())
             {
                 Console.WriteLine($"Downloading Manifest");
-                client.DownloadFile($"{AssetDownloadUrl}manifest.data", $"{workingFolder}/Manifest/manifest.data");
+                client.DownloadFile($"{AssetDownloadUrl}manifest.data", $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data");
             }
         }
 
@@ -219,7 +232,7 @@ namespace AssetWebApi
 
         public string GetPathToManifestAndDownloadIfNotExists()
         {
-            var pathToManifest = $"{workingFolder}/Manifest/manifest.data";
+            var pathToManifest = $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data";
 
             if (!File.Exists(pathToManifest))
             {
