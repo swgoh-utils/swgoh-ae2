@@ -1,5 +1,8 @@
 # 1.0.0 (2023-02-03)
+initial create
 
+# 1.0.1 (2023-02-06)
+added the ability to diff list
 
 ### Features
 
