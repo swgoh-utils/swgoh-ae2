@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssetWebApi.Controllers
 {
+    /// <summary>
+    /// Endpoints for swgoh assets. 
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class AssetController : ControllerBase
@@ -31,11 +34,11 @@ namespace AssetWebApi.Controllers
         /// </summary>
         /// <param name="version">the assetversion. you can get it via Metadata in comlink.</param>
         /// <param name="diffVersion">the assetversion to diff. This is usually the older version</param>
-        /// <param name="diffType">Says how to diff the assetversions</param>
+        /// <param name="diffType">Says how to diff the assetversions. Defaults to "All" wich lists Newly added and Changed assets</param>
         /// <param name="prefix">Filtery by prefix. For example "charui" gives only character images</param>
         /// <returns></returns>
         [HttpGet("listDiff")]
-        public IEnumerable<string> listDiff(int version, int diffVersion, DiffType diffType = DiffType.New, string? prefix = null)
+        public IEnumerable<string> listDiff(int version, int diffVersion, DiffType diffType = DiffType.All, string? prefix = null)
         {
             var mainProgram = new MainProgram();
             mainProgram.AssetVersion = version.ToString();

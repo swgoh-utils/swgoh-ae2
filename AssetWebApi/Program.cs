@@ -1,3 +1,4 @@
+using AssetWebApi.Extensions;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
@@ -17,21 +18,22 @@ builder.Services.AddSwaggerGen(c =>
 {
     var openApiContact = new OpenApiContact
     {
-        Name = "Barbarossa",
-        Extensions = new Dictionary<string, IOpenApiExtension>()
+        Name = "Commlink Discord",
+        Extensions = new Dictionary<string, IOpenApiExtension>(),
+        Url = new Uri("https://discord.gg/7Mk7a8zS")
     };
-
-    openApiContact.Extensions.Add("Discord", new OpenApiString("Barbarossa#8172"));
 
     c.SwaggerDoc("v1",
         new OpenApiInfo
         {
             Title = "swgoh Asset getter",
             Version = "v1",
-            Description = $"",
+            Description = $"swgoh Asset getter can list and download swgoh related assets. (2d Textures only)",
             Contact = openApiContact,
         }
      );
+
+    c.SchemaFilter<EnumSchemaFilter>();
 
     var filePath = Path.Combine(System.AppContext.BaseDirectory, "AssetWebApi.xml");
     c.IncludeXmlComments(filePath, true);
