@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.1.0...v1.1.1) (2023-02-07)
+
+
+### Bug Fixes
+
+* add clear Description to enums. ([b1346fa](https://github.com/swgoh-utils/swgoh-ae2/commit/b1346fad2cec5083d5a0d2359795ceff77df4a89))
+
 # [1.1.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.0.0...v1.1.0) (2023-02-06)
 
 
