@@ -15,7 +15,7 @@ namespace SwgohAssetGetterConsole
             var debugMode = false;
             if (debugMode)
             {
-                var argumentText = "-downloadDiff 2706 new -v 2708 -eM true";
+                var argumentText = "-downloadDiff 3114 new -v 31500 -eM true";
 
                 args = argumentText.Split(' ');
             }

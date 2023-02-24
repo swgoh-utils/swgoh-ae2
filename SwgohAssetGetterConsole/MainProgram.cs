@@ -142,7 +142,7 @@ namespace SwgohAssetGetterConsole
             using (var client = new WebClient())
             {
                 Console.WriteLine($"Downloading Manifest");
-                client.DownloadFile($"{AssetDownloadUrl}manifest.data", $"{workingFolder}/Manifest/manifest.data");
+                client.DownloadFile($"{AssetDownloadUrl}manifest.data", $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data");
             }
         }
 
