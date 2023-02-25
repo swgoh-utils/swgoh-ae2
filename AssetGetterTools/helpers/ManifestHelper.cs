@@ -41,7 +41,7 @@ namespace Asset_Getter
             }
 
             BundleFiles = this.rawAssetManifest.Records.Where(record => record.packageType == 0).ToList();
-            AudioFiles = this.rawAssetManifest.Records.Where(record => record.packageType == 1).ToList();
+            AudioFiles = this.rawAssetManifest.Records.Where(record => record.packageType == 1 && record.Name != "soundbanksinfo").ToList();
 
             //backwards compatibility
             var audioFileNames = AudioFiles.Select(audio => audio.Name).ToList();

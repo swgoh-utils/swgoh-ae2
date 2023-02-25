@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AssetGUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "AssetGUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
