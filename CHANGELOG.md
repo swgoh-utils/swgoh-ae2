@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.1.1...v1.2.0) (2023-02-25)
+
+
+### Bug Fixes
+
+* ignore the GUI on build ([7b20794](https://github.com/swgoh-utils/swgoh-ae2/commit/7b20794bd6a1c3511eca6b14e1a7694eae4c96b2))
+
+
+### Features
+
+* added GUI (Windows only) ([d8c4d1f](https://github.com/swgoh-utils/swgoh-ae2/commit/d8c4d1ffe58e85ec4a64bb6c001da426058c0ae8))
+
 ## [1.1.1](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.1.0...v1.1.1) (2023-02-07)
 
 
