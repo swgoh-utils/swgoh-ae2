@@ -89,6 +89,17 @@ namespace SwgohAssetGetterConsole
             }
         }
 
+        public List<string> diffAssetVersions(string oldmanifest, string newManifest)
+        {
+            ManifestHelper manifestHelper = new ManifestHelper();
+            manifestHelper.ReadFromFile(newManifest);
+
+            ManifestHelper manifestHelperOld = new ManifestHelper();
+            manifestHelperOld.ReadFromFile(oldmanifest);
+
+            return manifestHelperOld.DiffNewlyAddedBundles(manifestHelper);
+        }
+
         public List<string> diffAssetVersions(string oldVersion, DiffType diffType = DiffType.All)
         {
             var pathToManifest = GetPathToManifestAndDownloadIfNotExists();
@@ -152,7 +163,7 @@ namespace SwgohAssetGetterConsole
             {
                 Console.WriteLine($"Downloading {assetBundleName}");
                 Directory.CreateDirectory($"{workingFolder}/tmp");
-                
+
                 var pathToNewFile = $"{workingFolder}/tmp/{assetBundleName}.bundle";
                 using (var client = new WebClient())
                 {

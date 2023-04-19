@@ -39,6 +39,20 @@ namespace SwgohAssetGetterConsole
                 var argToProcess = args[0];
                 switch(argToProcess)
                 {
+                    case "-DM":
+                    case "-diffManifest":
+                        Console.WriteLine($"Start Comparing Manifests");
+                        var firstAsset = args[1];
+                        var secondAsset = args[2];
+                        var diffedAssets = mainProgram.diffAssetVersions(firstAsset, secondAsset);
+
+                        foreach(var asset in diffedAssets)
+                        {
+                            Console.WriteLine(asset);
+                        }
+
+                        Console.WriteLine($"Done Comparing Manifests");
+                        break;
                     case "-downloadManifest":
                         Console.WriteLine($"Downloading Manifest...");
                         mainProgram.DownloadManifest();
