@@ -7,7 +7,7 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="470b073f-6c23-4fc5-a703-0b2dd653c125"
+    Name="570b073f-6c23-4fc5-a703-0b2dd653c125"
     Publisher="CN=midi"
     Version="1.0.0.0" />
 
