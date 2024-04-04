@@ -23,13 +23,14 @@ namespace AssetWebApi
         {
             get
             {
-                return @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + this.AssetVersion + @"/Android/ETC/";
+                return @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + this.AssetVersion + this.AssetOSPath;
             }
         }
+        public string AssetOSPath { get; set; }
 
         public Filehelper fileHelper { get; set; }
 
-        public MainProgram()
+        public MainProgram(AssetOS assetOS = AssetOS.Windows)
         {
             var defaultSettings = DefaultSettings.GetDefaultSettings();
 
@@ -40,6 +41,27 @@ namespace AssetWebApi
 
             this.fileHelper = new Filehelper();
             this.fileHelper.workingFolder = defaultSettings.workingDirectory;
+
+            this.SetAssetOSPath(assetOS);
+        }
+
+        public void SetAssetOSPath(AssetOS assetOS)
+        {
+            switch (assetOS)
+            {
+                case AssetOS.Windows:
+                    AssetOSPath = @"/Windows/ETC/";
+                    break;
+                case AssetOS.Android:
+                    AssetOSPath = @"/Android/ETC/";
+                    break;
+                case AssetOS.iOS:
+                    AssetOSPath = @"/iOS/PVRTC/";
+                    break;
+                default:
+                    AssetOSPath = @"/Windows/ETC/";
+                    break;
+            }
         }
 
         public void SaveAssetNamesToFile()

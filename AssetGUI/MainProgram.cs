@@ -1,5 +1,6 @@
 ﻿using Asset_Getter;
 using AssetGetterTools;
+using AssetGetterTools.models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,15 +25,37 @@ namespace AssetGUI
         {
             get
             {
-                return @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + this.AssetVersion + @"/Android/ETC/";
+                return @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + this.AssetVersion + this.AssetOSPath;
             }
         }
+        public string AssetOSPath { get; set; }
 
         public Filehelper fileHelper { get; set; }
 
-        public MainProgram()
+        public MainProgram(AssetOS assetOS = AssetOS.Windows)
         {
             this.fileHelper = new Filehelper();
+
+            this.SetAssetOSPath(assetOS);
+        }
+
+        public void SetAssetOSPath(AssetOS assetOS)
+        {
+            switch (assetOS)
+            {
+                case AssetOS.Windows:
+                    AssetOSPath = @"/Windows/ETC/";
+                    break;
+                case AssetOS.Android:
+                    AssetOSPath = @"/Android/ETC/";
+                    break;
+                case AssetOS.iOS:
+                    AssetOSPath = @"/iOS/PVRTC/";
+                    break;
+                default:
+                    AssetOSPath = @"/Windows/ETC/";
+                    break;
+            }
         }
 
         public void SaveAssetNamesToFile()
@@ -91,7 +114,7 @@ namespace AssetGUI
             ManifestHelper manifestHelper = new ManifestHelper();
             manifestHelper.ReadFromFile(pathToManifest);
 
-            var diffManifestUrl = @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + oldVersion + @"/Android/ETC/";
+            var diffManifestUrl = @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + oldVersion + this.AssetOSPath;
             var pathToDiffManifest = $"{workingFolder}/Manifest/{oldVersion}_manifest.data";
 
             using (var client = new WebClient())

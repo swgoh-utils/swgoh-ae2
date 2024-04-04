@@ -21,7 +21,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="5" />
+            <RowDefinition Height="35" />
             <RowDefinition Height="35" />
             <RowDefinition Height="5" />
             <RowDefinition Height="35" />
@@ -38,6 +38,9 @@
         </Grid.RowDefinitions>
 
         <TextBlock x:Name="tblHeaderText" Text="This Program will download Asset files from the swgoh Server" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"></TextBlock>
+        
+        <TextBlock x:Name="tblAssetOS" Text="AssetOS:" Grid.Row="1" Grid.Column="0"></TextBlock>
+        <ComboBox x:Name="cbAssetOs" Grid.Row="1" Grid.Column="1" MinWidth="400" ItemsSource="{x:Bind AssetOSs}" SelectedItem="{x:Bind SelectedAssetOS, Mode=TwoWay}"></ComboBox>
 
         <TextBlock x:Name="tblVersion" Text="Assetversion:" Grid.Row="2" Grid.Column="0"></TextBlock>
         <TextBox x:Name="tbVersion" Text="31500" Grid.Row="2" Grid.Column="1"></TextBox>

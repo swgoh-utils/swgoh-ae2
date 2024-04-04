@@ -1,3 +1,4 @@
+using AssetGetterTools.models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetWebApi.Controllers
@@ -22,9 +23,9 @@ namespace AssetWebApi.Controllers
         /// <param name="version">the assetversion. you can get it via Metadata in comlink.</param>
         /// <returns></returns>
         [HttpGet("list")]
-        public IEnumerable<string> Get(int version)
+        public IEnumerable<string> Get(int version, AssetOS assetOS = AssetOS.Windows)
         {
-            var mainProgram = new MainProgram();
+            var mainProgram = new MainProgram(assetOS);
             mainProgram.AssetVersion = version.ToString();
             return mainProgram.GetAssetsFromManifest();
         }
@@ -38,9 +39,9 @@ namespace AssetWebApi.Controllers
         /// <param name="prefix">Filtery by prefix. For example "charui" gives only character images</param>
         /// <returns></returns>
         [HttpGet("listDiff")]
-        public IEnumerable<string> listDiff(int version, int diffVersion, DiffType diffType = DiffType.All, string? prefix = null)
+        public IEnumerable<string> listDiff(int version, int diffVersion, DiffType diffType = DiffType.All, string? prefix = null, AssetOS assetOS = AssetOS.Windows)
         {
-            var mainProgram = new MainProgram();
+            var mainProgram = new MainProgram(assetOS);
             mainProgram.AssetVersion = version.ToString();
             return mainProgram.diffAssetVersions(diffVersion.ToString(), diffType, prefix); ;
         }
@@ -53,9 +54,9 @@ namespace AssetWebApi.Controllers
         /// <param name="forceReDownload">Optional parameter (default = false). true Forces a re-download from the CG Server. Otherwise it uses the cache if possible.</param>
         /// <returns></returns>
         [HttpGet("single")]
-        public FileContentResult Get(string assetName, int version, bool forceReDownload = false)
+        public FileContentResult Get(string assetName, int version, bool forceReDownload = false, AssetOS assetOS = AssetOS.Windows)
         {
-            var mainProgram = new MainProgram();
+            var mainProgram = new MainProgram(assetOS);
             mainProgram.AssetVersion = version.ToString();
             var singleFilePath = mainProgram.getSingleTextureIfExists(assetName, forceReDownload);
             var fileContent = System.IO.File.ReadAllBytes(singleFilePath);

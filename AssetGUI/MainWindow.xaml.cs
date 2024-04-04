@@ -24,6 +24,7 @@ using System.Net.Cache;
 using System.Net;
 using Asset_Getter;
 using System.Runtime.InteropServices;
+using AssetGetterTools.models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -41,6 +42,8 @@ namespace AssetGUI
         private IList<DiffType> _diffTypes = Enum.GetValues(typeof(DiffType)).Cast<DiffType>().ToList();
         public IList<DiffType> DiffTypes => _diffTypes;
         public DiffType SelectedDiffType { get; set; }
+        public List<AssetOS> AssetOSs { get; set; }
+        public AssetOS SelectedAssetOS { get; set; }
         public List<string> DownloadableAssets { get; set; }
         public string SelectedDownloadableAsset { get; set; }
         public List<string> prefixes { get; set; }
@@ -54,9 +57,11 @@ namespace AssetGUI
             //Console.SetOut();
 
             this.mainProgram = new MainProgram();
-            SetWindowSize(800, 225);
+            SetWindowSize(800, 280);
             setVisibilityOfSecondaryRows(false);
 
+            this.AssetOSs = new List<AssetOS>() { AssetOS.Windows, AssetOS.Android, AssetOS.iOS };
+            this.SelectedAssetOS = AssetOS.Windows;
             this.DownloadableAssets = new List<string>();
             this.prefixes = new List<string>();
 
@@ -151,6 +156,8 @@ namespace AssetGUI
             mainProgram.workingFolder = tbExportPath.Text;
             mainProgram.targetFolder = tbExportPath.Text + "/OutPut";
 
+            this.mainProgram.SetAssetOSPath(this.SelectedAssetOS);
+
             Directory.CreateDirectory(mainProgram.workingFolder);
             Directory.CreateDirectory(mainProgram.targetFolder);
 
@@ -161,7 +168,7 @@ namespace AssetGUI
             prefixes.AddRange(mainProgram.GetPrefixesFromManifest());
             SelectedPrefix = prefixes.FirstOrDefault();
 
-            SetWindowSize(800, 400);
+            SetWindowSize(800, 500);
             setVisibilityOfSecondaryRows(true);
         }
 
