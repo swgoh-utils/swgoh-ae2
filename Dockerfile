@@ -13,6 +13,7 @@ COPY AssetStudio/AssetStudioFBXWrapper/*.csproj ./AssetStudio/AssetStudioFBXWrap
 COPY AssetStudio/AssetStudioUtility/*.csproj ./AssetStudio/AssetStudioUtility/
 COPY AssetStudio/AssetStudio.PInvoke/*.csproj ./AssetStudio/AssetStudio.PInvoke/
 COPY AssetStudio/Texture2DDecoderWrapper/*.csproj ./AssetStudio/Texture2DDecoderWrapper/
+COPY AssetGUI/*.csproj ./AssetGUI/
 RUN dotnet restore
 
 # copy everything else and build app
