@@ -4,8 +4,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.sln .
-COPY SwgohAssetGetterConsole/*.csproj ./SwgohAssetGetterConsole/
+COPY swgoh-ae-api.sln ./swgoh-ae-api.sln
 COPY AssetGetterTools/*.csproj ./AssetGetterTools/
 COPY AssetWebApi/*.csproj ./AssetWebApi/
 COPY AssetStudio/AssetStudio/*.csproj ./AssetStudio/AssetStudio/
@@ -13,7 +12,6 @@ COPY AssetStudio/AssetStudioFBXWrapper/*.csproj ./AssetStudio/AssetStudioFBXWrap
 COPY AssetStudio/AssetStudioUtility/*.csproj ./AssetStudio/AssetStudioUtility/
 COPY AssetStudio/AssetStudio.PInvoke/*.csproj ./AssetStudio/AssetStudio.PInvoke/
 COPY AssetStudio/Texture2DDecoderWrapper/*.csproj ./AssetStudio/Texture2DDecoderWrapper/
-COPY AssetGUI/*.csproj ./AssetGUI/
 RUN dotnet restore
 
 # copy everything else and build app
