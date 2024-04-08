@@ -5,11 +5,13 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace AssetWebApi
+namespace AssetGUI
 {
     public class MainProgram
     {
@@ -32,15 +34,7 @@ namespace AssetWebApi
 
         public MainProgram(AssetOS assetOS = AssetOS.Windows)
         {
-            var defaultSettings = DefaultSettings.GetDefaultSettings();
-
-            this.workingFolder = defaultSettings.workingDirectory;
-            this.targetFolder = defaultSettings.defaultOutputDirectory;
-            this.AssetVersion = defaultSettings.defaultAssetVersion;
-            this.exportMeshes = defaultSettings.exportMeshes;
-
             this.fileHelper = new Filehelper();
-            this.fileHelper.workingFolder = defaultSettings.workingDirectory;
 
             this.SetAssetOSPath(assetOS);
         }
@@ -76,31 +70,34 @@ namespace AssetWebApi
             File.WriteAllText($"{workingFolder}AssetPrefixes.json", JsonConvert.SerializeObject(allPrefixes));
         }
 
-        public void exportAllFiles()
+        public async Task<bool> exportAllFiles()
         {
             var allAssets = GetAssetsFromManifest();
-            foreach (var asset in allAssets)
-            {
-                exportSingleFile(asset);
-            }
+            exportMultipleAssets(allAssets);
+            return true;
         }
 
-        public void downloadAllAudioFiles()
+        public async Task<bool> downloadAllAudioFiles()
         {
             var allAssets = GetAudioFromManifest();
             foreach (var asset in allAssets)
             {
-                DownloadAudioPackages(asset);
+                var audioWwpkgFile = DownloadAudioPackages(asset);
+                var extractedPCK = ExtractAudioPackage(audioWwpkgFile, asset);
             }
+            Console.WriteLine("done downloading all Audio files");
+            return true;
         }
 
-        public void exportAllWithPrefixFile(string prefix)
+        public async Task<bool> exportAllWithPrefixFile(string prefix)
         {
             var allAssetsWithPrefix = GetAssetsFromManifest().Where(r => r.StartsWith(prefix)).ToList();
             foreach (var asset in allAssetsWithPrefix)
             {
                 exportSingleFile(asset);
             }
+
+            return true;
         }
 
         public void exportMultipleAssets(List<string> allAssetsToExport)
@@ -111,13 +108,13 @@ namespace AssetWebApi
             }
         }
 
-        public List<string> diffAssetVersions(string oldVersion, DiffType diffType = DiffType.All, string prefix = null)
+        public List<string> diffAssetVersions(string oldVersion, DiffType diffType = DiffType.All)
         {
             var pathToManifest = GetPathToManifestAndDownloadIfNotExists();
             ManifestHelper manifestHelper = new ManifestHelper();
             manifestHelper.ReadFromFile(pathToManifest);
 
-            var diffManifestUrl = @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + oldVersion + @"/Android/ETC/";
+            var diffManifestUrl = @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + oldVersion + this.AssetOSPath;
             var pathToDiffManifest = $"{workingFolder}/Manifest/{oldVersion}_manifest.data";
 
             using (var client = new WebClient())
@@ -129,75 +126,34 @@ namespace AssetWebApi
             ManifestHelper manifestHelperOld = new ManifestHelper();
             manifestHelperOld.ReadFromFile(pathToDiffManifest);
 
-            List<string> result = null;
-
             switch (diffType)
             {
                 case DiffType.All:
-                    result = manifestHelperOld.DiffBundles(manifestHelper);
-                    break;
+                    return manifestHelperOld.DiffBundles(manifestHelper);
                 case DiffType.New:
-                    result = manifestHelperOld.DiffNewlyAddedBundles(manifestHelper);
-                    break;
+                    return manifestHelperOld.DiffNewlyAddedBundles(manifestHelper);
                 case DiffType.Changed:
-                    result = manifestHelperOld.DiffChangedBundles(manifestHelper);
-                    break;
+                    return manifestHelperOld.DiffChangedBundles(manifestHelper);
                 default:
-                    result = manifestHelperOld.DiffBundles(manifestHelper);
-                    break;
+                    return manifestHelperOld.DiffBundles(manifestHelper);
             }
-
-            if(prefix != null)
-            {
-                result.RemoveAll(x => x.Split('_').FirstOrDefault() != prefix);
-            }
-
-            return result;
         }
 
-        public string getSingleTextureIfExists(string assetName, bool forceReDownload = false)
-        {
-            try
-            {
-                var prefix = assetName.Split('_')[0];
-                var fullFilePath = $"{targetFolder}/{prefix}/tex.{assetName}.png";
-
-                if (File.Exists(fullFilePath) && !forceReDownload)
-                {
-                    return fullFilePath;
-                }
-                else
-                {
-                    var downloadedFile = DownloadAssetBundle(assetName);
-                    fileHelper.UnpackBundle(downloadedFile, $"{targetFolder}/{prefix}", assetName, false, this.exportMeshes);
-                    return fullFilePath;
-                }
-
-                
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error extracting asset '{assetName}'! you may ignore this.");
-                Console.WriteLine(ex);
-            }
-            return null;
-        }
-
-        public string exportSingleFile(string assetName)
+        public async Task<bool> exportSingleFile(string assetName)
         {
             try
             {
                 var prefix = assetName.Split('_')[0];
                 var downloadedFile = DownloadAssetBundle(assetName);
                 fileHelper.UnpackBundle(downloadedFile, $"{targetFolder}/{prefix}", assetName, false, this.exportMeshes);
-                return $"{targetFolder}/{prefix}";
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error extracting asset '{assetName}'! you may ignore this.");
                 Console.WriteLine(ex);
             }
-            return targetFolder;
+
+            return true;
         }
 
         public void DownloadManifest()
@@ -228,6 +184,36 @@ namespace AssetWebApi
             catch (Exception ex)
             {
                 Console.WriteLine($"Error downloading file '{assetBundleName}'! you may ignore this.");
+                return null;
+            }
+        }
+
+        public string ExtractAudioPackage(string audioWwwpkgPath, string assetBundleName)
+        {
+            try
+            {
+                Console.WriteLine($"Extracting {assetBundleName}");
+                Directory.CreateDirectory($"{workingFolder}/tmp_audio_pck");
+
+                var audioZipFile = ZipFile.Open(audioWwwpkgPath, ZipArchiveMode.Read);
+
+                var pathToNewFile = $"{workingFolder}/tmp_audio_pck/{assetBundleName}.pck";
+
+                var pckFile = audioZipFile.Entries.FirstOrDefault(entry => entry.Name.EndsWith("pck"));
+
+                if(pckFile == null)
+                {
+                    Console.WriteLine($"Cant Extract {assetBundleName} - this may have different reasons");
+                    return null;
+                }
+
+                pckFile.ExtractToFile(pathToNewFile);
+
+                return pathToNewFile;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error extracting file '{assetBundleName}'! you may ignore this.");
                 return null;
             }
         }

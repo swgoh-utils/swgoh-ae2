@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AssetGetterTools.models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +13,7 @@ namespace SwgohAssetGetterConsole
         public string defaultOutputDirectory { get; set; }
         public string defaultAssetVersion { get; set; }
         public bool exportMeshes { get; set; }
+        public AssetOS assetOS { get; set; }
 
         public static DefaultSettings GetDefaultSettings()
         {

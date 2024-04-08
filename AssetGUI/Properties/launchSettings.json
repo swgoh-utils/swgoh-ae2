@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "AssetGUI (Package)": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": false
+    },
+    "AssetGUI (Unpackaged)": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

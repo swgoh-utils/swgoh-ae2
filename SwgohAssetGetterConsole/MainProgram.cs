@@ -18,14 +18,16 @@ namespace SwgohAssetGetterConsole
         public string AssetVersion { get; set; }
 
         public bool exportMeshes { get; set; }
+        public AssetOS assetOS { get; set; }
 
         public string AssetDownloadUrl
         {
             get
             {
-                return @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + this.AssetVersion + @"/Android/ETC/";
+                return @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + this.AssetVersion + this.AssetOSPath;
             }
         }
+        public string AssetOSPath { get; set; }
 
         public Filehelper fileHelper { get; set; }
 
@@ -37,9 +39,30 @@ namespace SwgohAssetGetterConsole
             this.targetFolder = defaultSettings.defaultOutputDirectory;
             this.AssetVersion = defaultSettings.defaultAssetVersion;
             this.exportMeshes = defaultSettings.exportMeshes;
+            this.assetOS = defaultSettings.assetOS;
 
             this.fileHelper = new Filehelper();
             this.fileHelper.workingFolder = defaultSettings.workingDirectory;
+            this.SetAssetOSPath(assetOS);
+        }
+
+        public void SetAssetOSPath(AssetOS assetOS)
+        {
+            switch (assetOS)
+            {
+                case AssetOS.Windows:
+                    AssetOSPath = @"/Windows/ETC/";
+                    break;
+                case AssetOS.Android:
+                    AssetOSPath = @"/Android/ETC/";
+                    break;
+                case AssetOS.iOS:
+                    AssetOSPath = @"/iOS/PVRTC/";
+                    break;
+                default:
+                    AssetOSPath = @"/Windows/ETC/";
+                    break;
+            }
         }
 
         public void SaveAssetNamesToFile()
@@ -89,13 +112,24 @@ namespace SwgohAssetGetterConsole
             }
         }
 
+        public List<string> diffAssetVersions(string oldmanifest, string newManifest)
+        {
+            ManifestHelper manifestHelper = new ManifestHelper();
+            manifestHelper.ReadFromFile(newManifest);
+
+            ManifestHelper manifestHelperOld = new ManifestHelper();
+            manifestHelperOld.ReadFromFile(oldmanifest);
+
+            return manifestHelperOld.DiffNewlyAddedBundles(manifestHelper);
+        }
+
         public List<string> diffAssetVersions(string oldVersion, DiffType diffType = DiffType.All)
         {
             var pathToManifest = GetPathToManifestAndDownloadIfNotExists();
             ManifestHelper manifestHelper = new ManifestHelper();
             manifestHelper.ReadFromFile(pathToManifest);
 
-            var diffManifestUrl = @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + oldVersion + @"/Android/ETC/";
+            var diffManifestUrl = @"https://eaassets-a.akamaihd.net/assetssw.capitalgames.com/PROD/" + oldVersion + this.AssetOSPath;
             var pathToDiffManifest = $"{workingFolder}/Manifest/{oldVersion}_manifest.data";
 
             using (var client = new WebClient())
@@ -142,7 +176,7 @@ namespace SwgohAssetGetterConsole
             using (var client = new WebClient())
             {
                 Console.WriteLine($"Downloading Manifest");
-                client.DownloadFile($"{AssetDownloadUrl}manifest.data", $"{workingFolder}/Manifest/manifest.data");
+                client.DownloadFile($"{AssetDownloadUrl}manifest.data", $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data");
             }
         }
 
@@ -152,7 +186,7 @@ namespace SwgohAssetGetterConsole
             {
                 Console.WriteLine($"Downloading {assetBundleName}");
                 Directory.CreateDirectory($"{workingFolder}/tmp");
-                
+
                 var pathToNewFile = $"{workingFolder}/tmp/{assetBundleName}.bundle";
                 using (var client = new WebClient())
                 {
@@ -189,7 +223,7 @@ namespace SwgohAssetGetterConsole
 
         public string GetPathToManifestAndDownloadIfNotExists()
         {
-            var pathToManifest = $"{workingFolder}/Manifest/manifest.data";
+            var pathToManifest = $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data";
 
             if (!File.Exists(pathToManifest))
             {

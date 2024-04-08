@@ -4,8 +4,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.sln .
-COPY SwgohAssetGetterConsole/*.csproj ./SwgohAssetGetterConsole/
+COPY swgoh-ae-api.sln ./swgoh-ae-api.sln
 COPY AssetGetterTools/*.csproj ./AssetGetterTools/
 COPY AssetWebApi/*.csproj ./AssetWebApi/
 COPY AssetStudio/AssetStudio/*.csproj ./AssetStudio/AssetStudio/
