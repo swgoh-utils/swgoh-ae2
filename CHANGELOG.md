@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.2.0...v1.3.0) (2024-04-08)
+
+
+### Bug Fixes
+
+* add AssetOS to Console ([fa93d09](https://github.com/swgoh-utils/swgoh-ae2/commit/fa93d098cd858b15272e7fe3874ed61cd2c87b53))
+* Update Dockerfile ([ebd5d67](https://github.com/swgoh-utils/swgoh-ae2/commit/ebd5d67745af36e47472a377f3d3b50d75bb573a))
+
+
+### Features
+
+* Allow Windows and set it to default ([7204712](https://github.com/swgoh-utils/swgoh-ae2/commit/720471238434a907128229011b7545746f939099))
+
 # [1.2.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.1.1...v1.2.0) (2023-02-25)
 
 
