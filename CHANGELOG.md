@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.3.0...v1.4.0) (2024-07-10)
+
+
+### Bug Fixes
+
+* add --platform as in https://github.com/dotnet/sdk/issues/29892 ([3c8a582](https://github.com/swgoh-utils/swgoh-ae2/commit/3c8a582f21702dce09affa5053a0930e44a72456))
+* Dockerimage build with .Net 8 (non slim) ([0221910](https://github.com/swgoh-utils/swgoh-ae2/commit/0221910a04ba11dbee857ccd829fb0d7c46d8526))
+* use .Net 8 for Docker ([5fde58c](https://github.com/swgoh-utils/swgoh-ae2/commit/5fde58c755c3466e29a242dfbf5f2b482a921985))
+
+
+### Features
+
+* Compatible with Unity 2022.3 ([d7c9dc9](https://github.com/swgoh-utils/swgoh-ae2/commit/d7c9dc978b33598e0296105b8b2f112fd0af128b))
+
 # [1.3.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.2.0...v1.3.0) (2024-04-08)
 
 
