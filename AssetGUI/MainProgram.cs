@@ -160,10 +160,19 @@ namespace AssetGUI
         {
             Directory.CreateDirectory($"{workingFolder}/Manifest");
 
-            using (var client = new WebClient())
+            try
             {
-                Console.WriteLine($"Downloading Manifest");
-                client.DownloadFile($"{AssetDownloadUrl}manifest.data", $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data");
+                using (var client = new WebClient())
+                {
+                    Console.WriteLine($"Downloading Manifest");
+                    client.DownloadFile($"{AssetDownloadUrl}manifest.data", $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data");
+                    Console.WriteLine($"Done downloading Manifest");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error downloading Manifest");
+                throw;
             }
         }
 

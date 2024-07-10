@@ -51,7 +51,7 @@ namespace AssetStudioGUI
             {
                 if (!TryExportFile(exportPath, item, ".wav", out var exportFullPath))
                     return false;
-                var buffer = converter.ConvertToWav();
+                var buffer = converter.ConvertToWav(m_AudioData, out var debugLog);
                 if (buffer == null)
                     return false;
                 File.WriteAllBytes(exportFullPath, buffer);

@@ -29,7 +29,7 @@ namespace AssetGetterTools
             var assetManager = new AssetsManager();
             exportableAssets.Clear();
 
-            assetManager.LoadFiles(pathes.ToArray());
+            assetManager.LoadFilesAndFolders(pathes.ToArray());
 
             foreach (var assetsFile in assetManager.assetsFileList)
             {
