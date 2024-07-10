@@ -1,6 +1,6 @@
 # best practices from https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-6.0#the-dockerfile
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0-bullseye-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -19,7 +19,7 @@ COPY ["./", "./"]
 WORKDIR /source/AssetWebApi
 RUN dotnet publish "AssetWebApi.csproj" -c release -o /app/publish --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-bullseye-slim
+FROM mcr.microsoft.com/dotnet/sdk:8.0
 WORKDIR /app
 EXPOSE 80
 ENV DISABLE_HTTPS_REDIRECT="true"
