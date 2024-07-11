@@ -10,7 +10,7 @@ docker pull ghcr.io/swgoh-utils/swgoh-ae2:latest
 docker run --name=swgoh-ae2 \
   -d \
   -restart always \
-  -p 3000:80 \
+  -p 3000:8080 \
   ghcr.io/swgoh-utils/swgoh-ae2:latest
 ```
 
