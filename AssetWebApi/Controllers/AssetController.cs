@@ -5,6 +5,18 @@ namespace AssetWebApi.Controllers
 {
     /// <summary>
     /// Endpoints for swgoh assets. 
+    /// 
+    /// 
+    /// AssetOS Enum:
+    /// Windows = 0
+    /// Android = 1
+    /// iOS = 2
+    /// 
+    /// DiffType Enum
+    /// All = 0
+    /// New = 1
+    /// Changed = 2
+    /// 
     /// </summary>
     [ApiController]
     [Route("[controller]")]

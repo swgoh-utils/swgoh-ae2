@@ -33,7 +33,7 @@ builder.Services.AddSwaggerGen(c =>
         }
      );
 
-    c.SchemaFilter<EnumSchemaFilter>();
+    //c.SchemaFilter<EnumSchemaFilter>();
 
     var filePath = Path.Combine(System.AppContext.BaseDirectory, "AssetWebApi.xml");
     c.IncludeXmlComments(filePath, true);
