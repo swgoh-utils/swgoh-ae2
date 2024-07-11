@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.4.0...v1.4.1) (2024-07-11)
+
+
+### Bug Fixes
+
+* use .Net 8 for better compatibility ([47bc267](https://github.com/swgoh-utils/swgoh-ae2/commit/47bc2670b4dbb6b9fe7ad427c30a410c02bd855c))
+
 # [1.4.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.3.0...v1.4.0) (2024-07-10)
 
 
