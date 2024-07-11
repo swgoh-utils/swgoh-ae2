@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.4.1...v1.4.2) (2024-07-11)
+
+
+### Bug Fixes
+
+* do not use EnumSchemaFilter ([a386177](https://github.com/swgoh-utils/swgoh-ae2/commit/a386177cdc4242dabe7be3faf1e755ad6e3b0995))
+
 ## [1.4.1](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.4.0...v1.4.1) (2024-07-11)
 
 
