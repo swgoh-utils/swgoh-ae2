@@ -35,6 +35,8 @@
             <RowDefinition x:Name="rowDownloadDiff" Height="35" />
             <RowDefinition Height="5" />
             <RowDefinition x:Name="rowDownloadAudio" Height="35" />
+            <RowDefinition Height="5" />
+            <RowDefinition x:Name="rowOptions" Height="35" />
         </Grid.RowDefinitions>
 
         <TextBlock x:Name="tblHeaderText" Text="This Program will download Asset files from the swgoh Server" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"></TextBlock>
@@ -71,6 +73,10 @@
 
         <TextBlock x:Name="tblDownloadAudio" Text="Download Audio:" Grid.Row="14" Grid.Column="0"></TextBlock>
         <Button x:Name="btDownloadAudio" Grid.Row="14" Grid.Column="3" Content="Download Audio" Click="btDownloadAudio_Click"/>
+
+        <CheckBox x:Name="cbShader" Grid.Row="16" Grid.Column="0" Content="Shader" Checked="cbShader_Checked" Unchecked="cbShader_Checked"/>
+        <CheckBox x:Name="cbMeshes" Grid.Row="16" Grid.Column="1" Content="Meshes" Checked="cbMeshes_Checked" Unchecked="cbMeshes_Checked"/>
+        <CheckBox x:Name="cbAnimator" Grid.Row="16" Grid.Column="2" Content="Animator" Checked="cbAnimator_Checked" Unchecked="cbAnimator_Checked"/>
         
     </Grid>
     

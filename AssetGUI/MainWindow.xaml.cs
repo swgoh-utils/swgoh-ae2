@@ -234,5 +234,20 @@ namespace AssetGUI
             mainGrid.Width = size.Width - 25;
             appWindow.Resize(size);
         }
+
+        private void cbShader_Checked(object sender, RoutedEventArgs e)
+        {
+            this.mainProgram.exportShader = this.cbShader.IsChecked.Value;
+        }
+
+        private void cbMeshes_Checked(object sender, RoutedEventArgs e)
+        {
+            this.mainProgram.exportMeshes = this.cbMeshes.IsChecked.Value;
+        }
+
+        private void cbAnimator_Checked(object sender, RoutedEventArgs e)
+        {
+            this.mainProgram.exportAnimator = this.cbAnimator.IsChecked.Value;
+        }
     }
 }
