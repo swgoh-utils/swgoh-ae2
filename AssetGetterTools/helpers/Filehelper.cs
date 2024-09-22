@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using AssetStudio;
 using AssetStudio.PInvoke;
 using AssetStudioGUI;
@@ -21,6 +22,7 @@ namespace AssetGetterTools
 
         public void UnpackBundle(string inFile, string targetFolder, string assetName, bool exportShader = false, bool exportMeshes = false, bool exportAnimator = false, bool exportMonoBehavior = false)
         {
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             Directory.CreateDirectory(targetFolder);
 
             var pathes = new List<string>();
