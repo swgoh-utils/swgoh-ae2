@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.4.2...v1.4.3) (2024-09-22)
+
+
+### Bug Fixes
+
+* Exporting of Meshes dont work under specific Cultures ([e470443](https://github.com/swgoh-utils/swgoh-ae2/commit/e4704432ce27b833270213facfcc0e80aa906642))
+
 ## [1.4.2](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.4.1...v1.4.2) (2024-07-11)
 
 
