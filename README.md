@@ -79,7 +79,6 @@ since this is build with .NetCore you will need the .Net Core runtime
 
 https://dotnet.microsoft.com/download
 
-
 ### linux dependencies:
 sudo apt install libgdiplus
 
