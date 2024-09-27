@@ -14,10 +14,46 @@
 
   <ItemGroup>
     <None Remove="Texture2DDecoderNative.dll" />
+    <None Remove="x64\PCK_Tools_Native_win\bnkextr.exe" />
+    <None Remove="x64\PCK_Tools_Native_win\ffmpeg.exe" />
+    <None Remove="x64\PCK_Tools_Native_win\LICENSE.txt" />
+    <None Remove="x64\PCK_Tools_Native_win\packed_codebooks_aoTuV_603.bin" />
+    <None Remove="x64\PCK_Tools_Native_win\quickbms.exe" />
+    <None Remove="x64\PCK_Tools_Native_win\quickbms.txt" />
+    <None Remove="x64\PCK_Tools_Native_win\revorb.exe" />
+    <None Remove="x64\PCK_Tools_Native_win\wavescan.bms" />
+    <None Remove="x64\PCK_Tools_Native_win\ww2ogg.exe" />
     <None Remove="x86\Texture2DDecoderNative.dll" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="x64\PCK_Tools_Native_win\bnkextr.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x64\PCK_Tools_Native_win\ffmpeg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x64\PCK_Tools_Native_win\LICENSE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x64\PCK_Tools_Native_win\packed_codebooks_aoTuV_603.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x64\PCK_Tools_Native_win\quickbms.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x64\PCK_Tools_Native_win\quickbms.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x64\PCK_Tools_Native_win\revorb.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x64\PCK_Tools_Native_win\wavescan.bms">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="x64\PCK_Tools_Native_win\ww2ogg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="x64\Texture2DDecoderNative.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

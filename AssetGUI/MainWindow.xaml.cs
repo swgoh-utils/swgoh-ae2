@@ -155,6 +155,7 @@ namespace AssetGUI
             mainProgram.AssetVersion = tbVersion.Text;
             mainProgram.workingFolder = tbExportPath.Text;
             mainProgram.targetFolder = tbExportPath.Text + "/OutPut";
+            mainProgram.audioTargetFolder = this.tbExportPath.Text + "/Audio_OutPut";
 
             this.mainProgram.SetAssetOSPath(this.SelectedAssetOS);
 
@@ -207,6 +208,7 @@ namespace AssetGUI
 
             mainProgram.workingFolder = this.tbExportPath.Text;
             mainProgram.targetFolder = this.tbExportPath.Text + "/OutPut";
+            mainProgram.audioTargetFolder = this.tbExportPath.Text + "/Audio_OutPut";
         }
 
         private async void refreshVersion()

@@ -1,6 +1,7 @@
 ﻿using Asset_Getter;
 using AssetGetterTools;
 using AssetGetterTools.models;
+using AssetGetterTools.pck;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace AssetGUI
     {
         public string workingFolder { get; set; }
         public string targetFolder { get; set; }
+        public string audioTargetFolder { get; set; }
         public string AssetVersion { get; set; }
 
         public bool exportShader { get; set; }
@@ -34,9 +36,12 @@ namespace AssetGUI
 
         public Filehelper fileHelper { get; set; }
 
+        public BarbPCKExtractor barbPCKExtractor { get; set; }
+
         public MainProgram(AssetOS assetOS = AssetOS.Windows)
         {
             this.fileHelper = new Filehelper();
+            this.barbPCKExtractor = new BarbPCKExtractor();
 
             this.SetAssetOSPath(assetOS);
         }
@@ -76,6 +81,7 @@ namespace AssetGUI
         {
             var allAssets = GetAssetsFromManifest();
             exportMultipleAssets(allAssets);
+            Console.WriteLine($"Done exportAllFiles!");
             return true;
         }
 
@@ -86,6 +92,10 @@ namespace AssetGUI
             {
                 var audioWwpkgFile = DownloadAudioPackages(asset);
                 var extractedPCK = ExtractAudioPackage(audioWwpkgFile, asset);
+                if(extractedPCK != null)
+                {
+                    ConvertPCKToWave(extractedPCK);
+                }
             }
             Console.WriteLine("done downloading all Audio files");
             return true;
@@ -99,6 +109,7 @@ namespace AssetGUI
                 exportSingleFile(asset);
             }
 
+            Console.WriteLine($"Done exportAllWithPrefixFile!");
             return true;
         }
 
@@ -108,6 +119,7 @@ namespace AssetGUI
             {
                 exportSingleFile(asset);
             }
+            Console.WriteLine($"Done exportMultipleAssets!");
         }
 
         public List<string> diffAssetVersions(string oldVersion, DiffType diffType = DiffType.All)
@@ -148,6 +160,7 @@ namespace AssetGUI
                 var prefix = assetName.Split('_')[0];
                 var downloadedFile = DownloadAssetBundle(assetName);
                 fileHelper.UnpackBundle(downloadedFile, $"{targetFolder}/{prefix}", assetName, this.exportShader, this.exportMeshes, this.exportAnimator);
+                Console.WriteLine($"Done exportSingleFile!");
             }
             catch (Exception ex)
             {
@@ -196,6 +209,23 @@ namespace AssetGUI
             {
                 Console.WriteLine($"Error downloading file '{assetBundleName}'! you may ignore this.");
                 return null;
+            }
+        }
+
+        public void ConvertPCKToWave(string pckFileToExtract)
+        {
+            try
+            {
+                Console.WriteLine($"Converting {Path.GetFileName(pckFileToExtract)}");
+                var audioOutputDirectory = audioTargetFolder;
+                Directory.CreateDirectory(audioOutputDirectory);
+
+                this.barbPCKExtractor.ExtractSingleFile(pckFileToExtract, audioOutputDirectory);
+                Console.WriteLine($"Done Converting!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error extracting file '{pckFileToExtract}'! you may ignore this.");
             }
         }
 

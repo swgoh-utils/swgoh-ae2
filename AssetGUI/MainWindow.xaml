@@ -45,7 +45,7 @@
         <ComboBox x:Name="cbAssetOs" Grid.Row="1" Grid.Column="1" MinWidth="400" ItemsSource="{x:Bind AssetOSs}" SelectedItem="{x:Bind SelectedAssetOS, Mode=TwoWay}"></ComboBox>
 
         <TextBlock x:Name="tblVersion" Text="Assetversion:" Grid.Row="2" Grid.Column="0"></TextBlock>
-        <TextBox x:Name="tbVersion" Text="31500" Grid.Row="2" Grid.Column="1"></TextBox>
+        <TextBox x:Name="tbVersion" Text="3512" Grid.Row="2" Grid.Column="1"></TextBox>
         <Button x:Name="btRefreshVersion" Grid.Row="2" Grid.Column="2" Click="btRefreshVersion_Click">
             <SymbolIcon Symbol="Refresh"/>
         </Button>
