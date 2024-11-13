@@ -1,6 +1,6 @@
 {
   "name": "swgoh-ae2",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "A service to download and extract SWGoH 2D Textures",
   "repository": {
     "type": "git",

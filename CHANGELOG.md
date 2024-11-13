@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.4.3...v1.5.0) (2024-09-27)
+
+
+### Features
+
+* Complete Audio to MP3 download for Windows ([510f744](https://github.com/swgoh-utils/swgoh-ae2/commit/510f744586c20e2a729e96c14238351f6f01478b))
+
 ## [1.4.3](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.4.2...v1.4.3) (2024-09-22)
 
 
