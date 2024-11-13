@@ -3,6 +3,7 @@ using AssetGetterTools;
 using AssetGetterTools.models;
 using AssetGetterTools.pck;
 using Newtonsoft.Json;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -180,8 +181,22 @@ namespace AssetGUI
                 using (var client = new WebClient())
                 {
                     Console.WriteLine($"Downloading Manifest");
-                    client.DownloadFile($"{AssetDownloadUrl}manifest.data", $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data");
+                    var downloadedManifestUrl = $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.data";
+                    client.DownloadFile($"{AssetDownloadUrl}manifest.data", downloadedManifestUrl);
                     Console.WriteLine($"Done downloading Manifest");
+
+                    using (FileStream inFile = File.OpenRead(downloadedManifestUrl))
+                    {
+                        Console.WriteLine($"Writing Json Manifest");
+
+                        var rawAssetManifest = Serializer.Deserialize<RawAssetManifest>(inFile);
+                        var jsonRawAssetManifest = JsonConvert.SerializeObject(rawAssetManifest);
+                        var downloadedManifestJsonPath = $"{workingFolder}/Manifest/{this.AssetVersion}_manifest.json";
+
+                        File.WriteAllText(downloadedManifestJsonPath, jsonRawAssetManifest);
+
+                        Console.WriteLine($"Done writing json Manifest");
+                    }
                 }
             }
             catch (Exception ex)

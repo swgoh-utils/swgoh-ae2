@@ -57,7 +57,7 @@ namespace AssetGUI
             //Console.SetOut();
 
             this.mainProgram = new MainProgram();
-            SetWindowSize(800, 280);
+            SetWindowSize(800, 500);
             setVisibilityOfSecondaryRows(false);
 
             this.AssetOSs = new List<AssetOS>() { AssetOS.Windows, AssetOS.Android, AssetOS.iOS };
