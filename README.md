@@ -1,6 +1,7 @@
 # SWGoH Asset Extractor
 This Program can download and extract SWGoH 2D Textures.
 
+Version for RaspberryPi can be found at https://github.com/Lego-Fan9/swgoh-assetapi
 ## Docker
 
 Docker images are automatically built and publish to github's container registry.  You can pull down an image and get started immediately using something like this:
