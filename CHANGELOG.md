@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.5.0...v1.6.0) (2025-07-12)
+
+
+### Features
+
+* use github for assetversion ([c2aa712](https://github.com/swgoh-utils/swgoh-ae2/commit/c2aa71263006486285d7312097181db07a1a6cdf))
+
 # [1.5.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.4.3...v1.5.0) (2024-09-27)
 
 
