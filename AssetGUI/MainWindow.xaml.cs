@@ -25,6 +25,8 @@ using System.Net;
 using Asset_Getter;
 using System.Runtime.InteropServices;
 using AssetGetterTools.models;
+using Newtonsoft.Json;
+using AssetGUI.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -214,11 +216,14 @@ namespace AssetGUI
         private async void refreshVersion()
         {
             Console.WriteLine("Trying to get newest active Assetversion");
-            var versionGetterUrl = "https://swgoh-guild-commander.azurewebsites.net/SwgohMain/AssetVersion";
+            var versionGetterUrl = "https://raw.githubusercontent.com/swgoh-utils/gamedata/refs/heads/main/meta.json";
             var versionResponse = await new HttpClient().SendAsync(new HttpRequestMessage(HttpMethod.Get, versionGetterUrl));
             if (versionResponse.IsSuccessStatusCode)
             {
-                var versionResult = await versionResponse.Content.ReadAsStringAsync();
+                var metaDataShortPlain = await versionResponse.Content.ReadAsStringAsync();
+                var metaDataShort = JsonConvert.DeserializeObject<MetadataShortModel>(metaDataShortPlain);
+
+                var versionResult = metaDataShort.data.assetVersion.ToString();
                 Console.WriteLine("AssetVersion: " + versionResult);
                 this.tbVersion.Text = versionResult;
             }
