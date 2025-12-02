@@ -31,6 +31,7 @@ namespace AssetGetterTools
 
             var assetManager = new AssetsManager();
             exportableAssets.Clear();
+            exportableSprites.Clear();
 
             assetManager.LoadFilesAndFolders(pathes.ToArray());
 
