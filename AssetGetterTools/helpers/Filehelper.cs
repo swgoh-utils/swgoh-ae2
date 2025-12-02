@@ -14,13 +14,14 @@ namespace AssetGetterTools
     {
         public string workingFolder { get; set; }
         public static List<AssetItem> exportableAssets = new List<AssetItem>();
+        public static List<AssetItem> exportableSprites = new List<AssetItem>();
 
         public Filehelper()
         {
             verifytextureDLLisReady();
         }
 
-        public void UnpackBundle(string inFile, string targetFolder, string assetName, bool exportShader = false, bool exportMeshes = false, bool exportAnimator = false, bool exportMonoBehavior = false)
+        public void UnpackBundle(string inFile, string targetFolder, string assetName, bool exportShader = false, bool exportMeshes = false, bool exportAnimator = false, bool exportMonoBehavior = false, bool exportSpriteAtlases = false)
         {
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             Directory.CreateDirectory(targetFolder);
@@ -39,6 +40,7 @@ namespace AssetGetterTools
                 {
                     var assetItem = new AssetItem(asset);
                     var exportable = false;
+                    var exportSprite = false;
                     switch (asset)
                     {
                         case GameObject m_GameObject:
@@ -83,7 +85,8 @@ namespace AssetGetterTools
                             exportable = exportAnimator;
                             break;
                         case MonoBehaviour m_MonoBehaviour:
-                            if (m_MonoBehaviour.m_Name == "" && m_MonoBehaviour.m_Script.TryGet(out var m_Script))
+                            bool monoScriptFound = m_MonoBehaviour.m_Script.TryGet(out var m_Script);
+                            if (m_MonoBehaviour.m_Name == "" && monoScriptFound)
                             {
                                 assetItem.Text = m_Script.m_ClassName;
                             }
@@ -91,6 +94,12 @@ namespace AssetGetterTools
                             {
                                 assetItem.Text = m_MonoBehaviour.m_Name;
                             }
+
+                            if (m_Script.m_Name == "NGUIAtlas" && m_Script.m_ClassName == "NGUIAtlas")
+                            {
+                                exportSprite = exportSpriteAtlases;
+                            }
+
                             exportable = exportMonoBehavior;
                             break;
                         case NamedObject m_NamedObject:
@@ -101,6 +110,11 @@ namespace AssetGetterTools
                     {
                         assetItem.Text = assetItem.TypeString + assetItem.UniqueID;
                     }
+
+                    if (exportSprite)
+                    {
+                        exportableSprites.Add(assetItem);
+                    } 
                     if (exportable)
                     {
                         exportableAssets.Add(assetItem);
@@ -108,9 +122,14 @@ namespace AssetGetterTools
                 }
             }
 
+            // Sprites need to be proccessed after images
             foreach (var exportAbleAsset in exportableAssets)
             {
                 var result = Exporter.ExportConvertFile(exportAbleAsset, $"{targetFolder}");
+            }
+            foreach (var exportableSprite in exportableSprites)
+            {
+                var result = Exporter.ExportConvertFile(exportableSprite, $"{targetFolder}", true);
             }
 
         }
@@ -140,6 +159,6 @@ namespace AssetGetterTools
 
             return directedDllDir;
         }
-
+        
     }
 }

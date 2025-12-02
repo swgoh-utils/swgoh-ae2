@@ -37,10 +37,10 @@ namespace SwgohAssetGetterConsole
                 ProcessAdditionalParameters(args, mainProgram);
 
                 var argToProcess = args[0];
-                switch(argToProcess)
+                switch(argToProcess.ToLowerInvariant())
                 {
-                    case "-DM":
-                    case "-diffManifest":
+                    case "-dm":
+                    case "-diffmanifest":
                         Console.WriteLine($"Start Comparing Manifests");
                         var firstAsset = args[1];
                         var secondAsset = args[2];
@@ -53,17 +53,17 @@ namespace SwgohAssetGetterConsole
 
                         Console.WriteLine($"Done Comparing Manifests");
                         break;
-                    case "-downloadManifest":
+                    case "-downloadmanifest":
                         Console.WriteLine($"Downloading Manifest...");
                         mainProgram.DownloadManifest();
                         Console.WriteLine($"Manifest downloaded!");
                         break;
-                    case "-getAssetNames":
+                    case "-getassetnames":
                         Console.WriteLine($"Getting asset Names...");
                         mainProgram.SaveAssetNamesToFile();
                         Console.WriteLine($"Assetnames file created...");
                         break;
-                    case "-getAssetPrefixes":
+                    case "-getassetprefixes":
                         Console.WriteLine($"Getting asset Prefixes...");
                         mainProgram.SavePrefixesToFile();
                         Console.WriteLine($"Prefixes file created...");
@@ -83,7 +83,7 @@ namespace SwgohAssetGetterConsole
                         {
                             var diffTypeArgument = args[2];
 
-                            switch (diffTypeArgument)
+                            switch (diffTypeArgument.ToLowerInvariant())
                             {
                                 case "all":
                                     Console.WriteLine($"Setting Difftype to {nameof(DiffType.All)}");
@@ -162,11 +162,9 @@ namespace SwgohAssetGetterConsole
                         var currentParameter = args[i+1];
                         var redownloadManifestAutomation = false;
 
-                        switch (currentArg)
+                        switch (currentArg.ToLowerInvariant())
                         {
-                            case "-Version":
                             case "-version":
-                            case "-V":
                             case "-v":
                                 if(mainProgram.AssetVersion != currentParameter)
                                 {
@@ -175,24 +173,25 @@ namespace SwgohAssetGetterConsole
                                 mainProgram.AssetVersion = currentParameter;
                                 Console.WriteLine($"Assetversion setted to: {mainProgram.AssetVersion}");
                                 break;
-                            case "-Target":
                             case "-target":
-                            case "-T":
                             case "-t":
                                 mainProgram.targetFolder = currentParameter;
                                 Console.WriteLine($"TargetFolder setted to: {mainProgram.targetFolder}");
                                 break;
-                            case "-Workingfolder":
                             case "-workingfolder":
-                            case "-W":
                             case "-w":
                                 mainProgram.workingFolder = currentParameter;
                                 Console.WriteLine($"Workingfolder setted to: {mainProgram.workingFolder}");
                                 break;
-                            case "-ExportMeshes":
-                            case "-eM":
+                            case "-exportmeshes":
+                            case "-em":
                                 mainProgram.exportMeshes = (currentParameter == "true" || currentParameter == "t");
                                 Console.WriteLine($"exportMeshes setted to: {mainProgram.exportMeshes}");
+                                break;
+                            case "-exportsprites":
+                            case "-es":
+                                mainProgram.exportSpriteAtlases = (currentParameter == "true" || currentParameter == "t");
+                                Console.WriteLine("exportSpriteAtlases set to: " + mainProgram.exportSpriteAtlases);
                                 break;
                             default:
                                 Console.WriteLine($"Unknown Argument '{currentArg}'");
