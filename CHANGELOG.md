@@ -1,3 +1,16 @@
+# [1.7.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.6.0...v1.7.0) (2025-12-03)
+
+
+### Bug Fixes
+
+* Clear Filehelper.exportableSprites before unpacking bundles ([7aa02fa](https://github.com/swgoh-utils/swgoh-ae2/commit/7aa02fa1254bbd71d60cce0a5a19d515fc1dfb13))
+* some nullchecks and not auto true for sprites ([29fd7ca](https://github.com/swgoh-utils/swgoh-ae2/commit/29fd7ca95a9ea6e3fc8d0e73e67632e39d7dec44))
+
+
+### Features
+
+* Add sprite exporting to GUI and CLI ([fe9d99d](https://github.com/swgoh-utils/swgoh-ae2/commit/fe9d99d5855704203502e2329764062d910d1c6b))
+
 # [1.6.0](https://github.com/swgoh-utils/swgoh-ae2/compare/v1.5.0...v1.6.0) (2025-07-12)
 
 
