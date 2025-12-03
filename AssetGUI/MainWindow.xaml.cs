@@ -63,8 +63,6 @@ namespace AssetGUI
             setVisibilityOfSecondaryRows(false);
             this.Title = "AssetGUI";
 
-            this.cbSpriteAtlases.IsChecked = true;
-
             this.AssetOSs = new List<AssetOS>() { AssetOS.Windows, AssetOS.Android, AssetOS.iOS };
             this.SelectedAssetOS = AssetOS.Windows;
             this.DownloadableAssets = new List<string>();

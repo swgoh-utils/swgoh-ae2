@@ -87,7 +87,7 @@ namespace AssetGetterTools
                             break;
                         case MonoBehaviour m_MonoBehaviour:
                             bool monoScriptFound = m_MonoBehaviour.m_Script.TryGet(out var m_Script);
-                            if (m_MonoBehaviour.m_Name == "" && monoScriptFound)
+                            if (m_MonoBehaviour.m_Name == "" && monoScriptFound && m_Script != null)
                             {
                                 assetItem.Text = m_Script.m_ClassName;
                             }
@@ -96,7 +96,7 @@ namespace AssetGetterTools
                                 assetItem.Text = m_MonoBehaviour.m_Name;
                             }
 
-                            if (m_Script.m_Name == "NGUIAtlas" && m_Script.m_ClassName == "NGUIAtlas")
+                            if (m_Script?.m_Name == "NGUIAtlas" && m_Script?.m_ClassName == "NGUIAtlas")
                             {
                                 exportSprite = exportSpriteAtlases;
                             }
