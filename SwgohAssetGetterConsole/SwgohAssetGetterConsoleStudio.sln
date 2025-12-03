@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11218.70
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwgohAssetGetterConsoleStudio", "SwgohAssetGetterConsoleStudio.csproj", "{54C4DB4A-E635-0F6A-CF2E-1D7C08FAD599}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetGetterTools", "..\AssetGetterTools\AssetGetterTools.csproj", "{A7F241DC-5D27-0D19-537B-F6A73BB82567}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54C4DB4A-E635-0F6A-CF2E-1D7C08FAD599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C4DB4A-E635-0F6A-CF2E-1D7C08FAD599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C4DB4A-E635-0F6A-CF2E-1D7C08FAD599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C4DB4A-E635-0F6A-CF2E-1D7C08FAD599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7F241DC-5D27-0D19-537B-F6A73BB82567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7F241DC-5D27-0D19-537B-F6A73BB82567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7F241DC-5D27-0D19-537B-F6A73BB82567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7F241DC-5D27-0D19-537B-F6A73BB82567}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {503FBF8B-0087-4010-BA97-D5272AC27ADA}
+	EndGlobalSection
+EndGlobal

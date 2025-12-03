@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using AssetGetterTools.helpers;
 
 namespace AssetStudioGUI
 {
@@ -242,6 +243,28 @@ namespace AssetStudioGUI
             return true;
         }
 
+        private static bool ExportSpriteAtlas(AssetItem item, string exportPath)
+        {
+            var m_MonoBehaviour = (MonoBehaviour)item.Asset;
+
+            // These should not be exported
+            if (m_MonoBehaviour.m_Name == null || m_MonoBehaviour.m_Name.EndsWith("_ref"))
+            {
+                return true;
+            }
+
+            byte[] MonoBehaviour = m_MonoBehaviour.GetRawData();
+            var atlas = SpriteAtlasParser.ParseAtlas(MonoBehaviour);
+            SpriteCutter.CutSprites(atlas, exportPath);
+
+            if (!TryExportFile(Path.Combine(exportPath, "sprites", atlas.Name), item, ".json", out var exportFullPath))
+                return false;
+            string atlasJson = JsonConvert.SerializeObject(atlas, Formatting.Indented);
+            File.WriteAllText(exportFullPath, atlasJson);
+
+            return true;
+        }
+
         private static bool TryExportFile(string dir, AssetItem item, string extension, out string fullPath)
         {
             var fileName = FixFileName(item.Text);
@@ -260,7 +283,7 @@ namespace AssetStudioGUI
             return false;
         }
 
-        public static bool ExportConvertFile(AssetItem item, string exportPath)
+        public static bool ExportConvertFile(AssetItem item, string exportPath, bool exportingSpriteAtlas = false)
         {
             switch (item.Type)
             {
@@ -282,6 +305,10 @@ namespace AssetStudioGUI
                     return ExportMovieTexture(item, exportPath);
                 case ClassIDType.Sprite:
                     return ExportSprite(item, exportPath);
+                case ClassIDType.MonoBehaviour:
+                    if (exportingSpriteAtlas)
+                        return ExportSpriteAtlas(item, exportPath);
+                    return ExportRawFile(item, exportPath);
                 case ClassIDType.AnimationClip:
                     return false;
                 default:

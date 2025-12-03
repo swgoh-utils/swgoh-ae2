@@ -18,6 +18,7 @@ namespace SwgohAssetGetterConsole
         public string AssetVersion { get; set; }
 
         public bool exportMeshes { get; set; }
+        public bool exportSpriteAtlases { get; set; }
         public AssetOS assetOS { get; set; }
 
         public string AssetDownloadUrl
@@ -160,7 +161,7 @@ namespace SwgohAssetGetterConsole
             {
                 var prefix = assetName.Split('_')[0];
                 var downloadedFile = DownloadAssetBundle(assetName);
-                fileHelper.UnpackBundle(downloadedFile, $"{targetFolder}/{prefix}", assetName, false, this.exportMeshes);
+                fileHelper.UnpackBundle(downloadedFile, $"{targetFolder}/{prefix}", assetName, false, this.exportMeshes, false, false, this.exportSpriteAtlases);
             }
             catch (Exception ex)
             {

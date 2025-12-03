@@ -11,11 +11,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="mainGrid" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+    <Grid x:Name="mainGrid" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="125" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="125" />
             <ColumnDefinition Width="130" />
         </Grid.ColumnDefinitions>
 
@@ -42,25 +42,25 @@
         <TextBlock x:Name="tblHeaderText" Text="This Program will download Asset files from the swgoh Server" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"></TextBlock>
         
         <TextBlock x:Name="tblAssetOS" Text="AssetOS:" Grid.Row="1" Grid.Column="0"></TextBlock>
-        <ComboBox x:Name="cbAssetOs" Grid.Row="1" Grid.Column="1" MinWidth="400" ItemsSource="{x:Bind AssetOSs}" SelectedItem="{x:Bind SelectedAssetOS, Mode=TwoWay}"></ComboBox>
+        <ComboBox x:Name="cbAssetOs" Grid.Row="1" Grid.Column="1" MinWidth="350" ItemsSource="{x:Bind AssetOSs}" SelectedItem="{x:Bind SelectedAssetOS, Mode=TwoWay}" MaxWidth="350" Width="350"></ComboBox>
 
         <TextBlock x:Name="tblVersion" Text="Assetversion:" Grid.Row="2" Grid.Column="0"></TextBlock>
-        <TextBox x:Name="tbVersion" Text="3512" Grid.Row="2" Grid.Column="1"></TextBox>
+        <TextBox x:Name="tbVersion" Text="3512" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="350" Width="350"></TextBox>
         <Button x:Name="btRefreshVersion" Grid.Row="2" Grid.Column="2" Click="btRefreshVersion_Click">
             <SymbolIcon Symbol="Refresh"/>
         </Button>
         <Button x:Name="btGetManifest" Grid.Row="2" Grid.Column="3" Content="Get Asset List" Click="btGetManifest_Click"/>
 
         <TextBlock x:Name="tblExportPath" Text="Export Path:" Grid.Row="4" Grid.Column="0"></TextBlock>
-        <TextBox x:Name="tbExportPath" Text="" Grid.Row="4" Grid.Column="1"></TextBox>
+        <TextBox x:Name="tbExportPath" Text="" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="350" Width="350"></TextBox>
         <Button x:Name="btSetExportPath" Grid.Row="4" Grid.Column="3" Content="Set Path" Click="btSetExportPath_Click"/>
 
         <TextBlock x:Name="tblDownloadSingle" Text="Single:" Grid.Row="6" Grid.Column="0"></TextBlock>
-        <ComboBox x:Name="cbDownloadSingle" Grid.Row="6" Grid.Column="1" MinWidth="400" ItemsSource="{x:Bind DownloadableAssets}" SelectedItem="{x:Bind SelectedDownloadableAsset, Mode=TwoWay}"></ComboBox>
+        <ComboBox x:Name="cbDownloadSingle" Grid.Row="6" Grid.Column="1" MinWidth="350" ItemsSource="{x:Bind DownloadableAssets}" SelectedItem="{x:Bind SelectedDownloadableAsset, Mode=TwoWay}" MaxWidth="350" Width="350"></ComboBox>
         <Button x:Name="btDownloadSingle" Grid.Row="6" Grid.Column="3" Content="Download Single" Click="btDownloadSingle_Click"/>
 
         <TextBlock x:Name="tblDownloadPrefix" Text="Prefix:" Grid.Row="8" Grid.Column="0"></TextBlock>
-        <ComboBox x:Name="cbDownloadPrefix" Grid.Row="8" Grid.Column="1" MinWidth="400" ItemsSource="{x:Bind prefixes}" SelectedItem="{x:Bind SelectedPrefix, Mode=TwoWay}"></ComboBox>
+        <ComboBox x:Name="cbDownloadPrefix" Grid.Row="8" Grid.Column="1" MinWidth="350" ItemsSource="{x:Bind prefixes}" SelectedItem="{x:Bind SelectedPrefix, Mode=TwoWay}" MaxWidth="350" Width="350"></ComboBox>
         <Button x:Name="btDownloadPrefix" Grid.Row="8" Grid.Column="3" Content="Download Prefix" Click="btDownloadPrefix_Click"/>
 
         <TextBlock x:Name="tblDownloadAll" Text="Download All:" Grid.Row="10" Grid.Column="0"></TextBlock>
@@ -74,9 +74,17 @@
         <TextBlock x:Name="tblDownloadAudio" Text="Download Audio:" Grid.Row="14" Grid.Column="0"></TextBlock>
         <Button x:Name="btDownloadAudio" Grid.Row="14" Grid.Column="3" Content="Download Audio" Click="btDownloadAudio_Click"/>
 
-        <CheckBox x:Name="cbShader" Grid.Row="16" Grid.Column="0" Content="Shader" Checked="cbShader_Checked" Unchecked="cbShader_Checked"/>
-        <CheckBox x:Name="cbMeshes" Grid.Row="16" Grid.Column="1" Content="Meshes" Checked="cbMeshes_Checked" Unchecked="cbMeshes_Checked"/>
-        <CheckBox x:Name="cbAnimator" Grid.Row="16" Grid.Column="2" Content="Animator" Checked="cbAnimator_Checked" Unchecked="cbAnimator_Checked"/>
+        <ItemsControl Grid.Row="16" Grid.ColumnSpan="4">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid ColumnDefinitions="150,150,150,150"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <CheckBox x:Name="cbShader" Grid.Row="16" Grid.Column="0" Content="Shader" Checked="cbShader_Checked" Unchecked="cbShader_Checked"/>
+            <CheckBox x:Name="cbMeshes" Grid.Row="16" Grid.Column="1" Content="Meshes" Checked="cbMeshes_Checked" Unchecked="cbMeshes_Checked"/>
+            <CheckBox x:Name="cbAnimator" Grid.Row="16" Grid.Column="2" Content="Animator" Checked="cbAnimator_Checked" Unchecked="cbAnimator_Checked"/>
+            <CheckBox x:Name="cbSpriteAtlases" Grid.Row="16" Grid.Column="3" Content="Sprite Atlases" Checked="cbSpriteAtlases_Checked" Unchecked="cbSpriteAtlases_Checked"/>
+        </ItemsControl>
         
     </Grid>
     

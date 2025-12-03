@@ -59,8 +59,9 @@ namespace AssetGUI
             //Console.SetOut();
 
             this.mainProgram = new MainProgram();
-            SetWindowSize(800, 500);
+            SetWindowSize(1000, 410);
             setVisibilityOfSecondaryRows(false);
+            this.Title = "AssetGUI";
 
             this.AssetOSs = new List<AssetOS>() { AssetOS.Windows, AssetOS.Android, AssetOS.iOS };
             this.SelectedAssetOS = AssetOS.Windows;
@@ -171,7 +172,7 @@ namespace AssetGUI
             prefixes.AddRange(mainProgram.GetPrefixesFromManifest());
             SelectedPrefix = prefixes.FirstOrDefault();
 
-            SetWindowSize(800, 500);
+            SetWindowSize(1000, 650);
             setVisibilityOfSecondaryRows(true);
         }
 
@@ -255,6 +256,11 @@ namespace AssetGUI
         private void cbAnimator_Checked(object sender, RoutedEventArgs e)
         {
             this.mainProgram.exportAnimator = this.cbAnimator.IsChecked.Value;
+        }
+
+        private void cbSpriteAtlases_Checked(object sender, RoutedEventArgs e)
+        {
+            this.mainProgram.exportSpriteAtlases = this.cbSpriteAtlases.IsChecked.Value;
         }
     }
 }
