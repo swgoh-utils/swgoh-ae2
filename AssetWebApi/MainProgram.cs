@@ -18,6 +18,7 @@ namespace AssetWebApi
         public string AssetVersion { get; set; }
 
         public bool exportMeshes { get; set; }
+        public bool exportSpriteAtlases { get; set; }
 
         public string AssetDownloadUrl
         {
@@ -169,7 +170,7 @@ namespace AssetWebApi
                 else
                 {
                     var downloadedFile = DownloadAssetBundle(assetName);
-                    fileHelper.UnpackBundle(downloadedFile, $"{targetFolder}/{prefix}", assetName, false, this.exportMeshes);
+                    fileHelper.UnpackBundle(downloadedFile, $"{targetFolder}/{prefix}", assetName, exportShader: false, this.exportMeshes, exportAnimator: false, exportMonoBehavior: false, this.exportSpriteAtlases);
                     return fullFilePath;
                 }
 

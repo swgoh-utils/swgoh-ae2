@@ -1,5 +1,6 @@
 using AssetGetterTools.models;
 using Microsoft.AspNetCore.Mvc;
+using AssetWebApi.Helpers;
 
 namespace AssetWebApi.Controllers
 {
@@ -73,6 +74,32 @@ namespace AssetWebApi.Controllers
             var singleFilePath = mainProgram.getSingleTextureIfExists(assetName, forceReDownload);
             var fileContent = System.IO.File.ReadAllBytes(singleFilePath);
             return File(fileContent, "application/octet-stream", Path.GetFileName(singleFilePath));
+        }
+
+        /// <summary>
+        /// Gets a bundle of Textures and returns them as a zip. May contain multiple.
+        /// </summary>
+        /// <param name="assetName">the name of the asset to download</param>
+        /// <param name="version">the assetversion. you can get it via Metadata in comlink.</param>
+        /// <param name="exportSpriteAtlases">Optional parameter (default = false). true will return sprite atlases</param>
+        /// <returns></returns>
+        [HttpGet("zip")]
+        public FileStreamResult GetZip(string assetName, int version, bool exportSpriteAtlases = false, AssetOS assetOS = AssetOS.Windows)
+        {
+            var defaultSettings = DefaultSettings.GetDefaultSettings() ?? 
+                throw new Exception("Could not load DefaultSettings. settings.json may not exist");
+            using (var tempWorkingFolder = new TempFolder(defaultSettings.defaultOutputDirectory))
+            {
+                var mainProgram = new MainProgram(assetOS);
+                mainProgram.AssetVersion = version.ToString();
+                mainProgram.targetFolder = tempWorkingFolder.Folder;
+                mainProgram.exportSpriteAtlases = exportSpriteAtlases;
+                mainProgram.getSingleTextureIfExists(assetName);
+
+                var zipStream = tempWorkingFolder.ToZipStream();
+
+                return File(zipStream, "application/zip", $"{assetName}.zip");
+            }
         }
     }
 }
