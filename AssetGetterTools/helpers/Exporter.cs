@@ -18,7 +18,7 @@ namespace AssetStudioGUI
             {
                 var type = ImageFormat.Png;
                 var converter = new Texture2DConverter(m_Texture2D);
-                if (!TryExportFile(exportPath, item, $".{type}", out var exportFullPath))
+                if (!TryExportFile(exportPath, item, $".{type}".ToLowerInvariant(), out var exportFullPath))
                     return false;
 
                 if (type == ImageFormat.Png && m_Texture2D.m_TextureFormat.IsPng())
