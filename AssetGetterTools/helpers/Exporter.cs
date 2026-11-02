@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System;
 using AssetGetterTools.helpers;
 
 namespace AssetStudioGUI
@@ -16,13 +17,21 @@ namespace AssetStudioGUI
             if (true)
             {
                 var type = ImageFormat.Png;
-                if (!TryExportFile(exportPath, item, "." + type.ToString().ToLower(), out var exportFullPath))
+                var converter = new Texture2DConverter(m_Texture2D);
+                if (!TryExportFile(exportPath, item, $".{type}", out var exportFullPath))
                     return false;
 
-                var image = m_Texture2D.ConvertToImage(true);
-                if (image == null)
-                    return false;
+                if (type == ImageFormat.Png && m_Texture2D.m_TextureFormat.IsPng())
+                {
+                    File.WriteAllBytes(exportFullPath, m_Texture2D.image_data.GetData());
+                    return true;
+                }
 
+                if (!converter.TryConvertToBgra32Image(flip: true, out var image))
+                {
+                    Console.WriteLine($"Failed to convert texture \"{m_Texture2D.m_Name}\" into image");
+                    return false;
+                }
                 using (image)
                 {
                     using (var file = File.OpenWrite(exportFullPath))
@@ -44,27 +53,58 @@ namespace AssetStudioGUI
         public static bool ExportAudioClip(AssetItem item, string exportPath)
         {
             var m_AudioClip = (AudioClip)item.Asset;
-            var m_AudioData = m_AudioClip.m_AudioData.GetData();
-            if (m_AudioData == null || m_AudioData.Length == 0)
-                return false;
-            var converter = new AudioClipConverter(m_AudioClip);
-            if (true && converter.IsSupport)
+            var audioBuff = BigArrayPool<byte>.Shared.Rent(m_AudioClip.m_AudioData.Size);
+            try
             {
-                if (!TryExportFile(exportPath, item, ".wav", out var exportFullPath))
+                var dataLen = m_AudioClip.m_AudioData.GetData(audioBuff);
+                if (dataLen <= 0)
+                {
+                    Console.WriteLine($"Failed to export \"{item.Text}\": AudioData was not found");
                     return false;
-                string debugLog = string.Empty;
-                var buffer = converter.ConvertToWav(m_AudioData, ref debugLog);
-                if (buffer == null)
-                    return false;
-                File.WriteAllBytes(exportFullPath, buffer);
+                }
+
+                var converter = new AudioClipConverter(m_AudioClip, audioBuff);
+                if (converter.IsSupport)
+                {
+                    if (!TryExportFile(exportPath, item, ".wav", out var exportFullPath))
+                        return false;
+
+                    string debugLog = $"Converting {item.TypeString} \"{m_AudioClip.m_Name}\" to wav..\n";
+                    if (!converter.TryConvertToWav(out var buffer, ref debugLog))
+                    {
+                        Console.WriteLine($"{debugLog}Failed to export \"{item.Text}\": Failed to convert audio to wav");
+                        return false;
+                    }
+
+                    File.WriteAllBytes(exportFullPath, buffer);
+                }
+                else
+                {
+                    if (!TryExportFile(exportPath, item, converter.GetExtensionName(), out var exportFullPath))
+                        return false;
+
+                    using (var file = File.OpenWrite(exportFullPath))
+                    {
+                        if (m_AudioClip.IsLegacyRawWav())
+                        {
+                            if (m_AudioClip.m_AudioData.Endian == EndianType.BigEndian)
+                            {
+                                AudioClipConverter.LegacyRawWavSwapEndian(audioBuff, m_AudioClip.m_AudioData.Size, (LegacyAudioType)m_AudioClip.m_Format);
+                            }
+                            string debugLog = string.Empty;
+                            var wavHeaderBuff = AudioClipConverter.LegacyRawWavGenerateHeader(m_AudioClip, ref debugLog);
+                            file.Write(wavHeaderBuff, 0, wavHeaderBuff.Length);
+                        }
+
+                        file.Write(audioBuff, 0, m_AudioClip.m_AudioData.Size);
+                    }
+                }
+                return true;
             }
-            else
+            finally
             {
-                if (!TryExportFile(exportPath, item, converter.GetExtensionName(), out var exportFullPath))
-                    return false;
-                File.WriteAllBytes(exportFullPath, m_AudioData);
+                BigArrayPool<byte>.Shared.Return(audioBuff, clearArray: true);
             }
-            return true;
         }
 
         public static bool ExportShader(AssetItem item, string exportPath)
@@ -219,10 +259,11 @@ namespace AssetStudioGUI
         public static bool ExportSprite(AssetItem item, string exportPath)
         {
             var type = ImageFormat.Png;
+            var converter = new SpriteConverter((Sprite)item.Asset, true);
             if (!TryExportFile(exportPath, item, "." + type.ToString().ToLower(), out var exportFullPath))
                 return false;
-            var image = ((Sprite)item.Asset).GetImage();
-            if (image != null)
+            
+            if (converter.TryConvertToImage(out var image, maskMode: SpriteMaskMode.On))
             {
                 using (image)
                 {
@@ -233,6 +274,7 @@ namespace AssetStudioGUI
                     return true;
                 }
             }
+            Console.WriteLine($"Failed to convert sprite \"{item.Text}\" into image");
             return false;
         }
 

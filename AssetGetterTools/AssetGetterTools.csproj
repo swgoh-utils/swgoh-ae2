@@ -61,14 +61,6 @@
     <PackageReference Include="System.Drawing.Common" Version="10.0.14" />
   </ItemGroup>
 
-  <!-- Add these here because AssetStudioMod uses slightly old versions. 
-        We can add all 3 because a publish gets rid of whatever we don't want -->
-  <ItemGroup>
-    <PackageReference Include="Kyaru.Texture2DDecoder.Linux" Version="0.2.0" />
-    <PackageReference Include="Kyaru.Texture2DDecoder.macOS" Version="0.2.0" />
-    <PackageReference Include="Kyaru.Texture2DDecoder.Windows" Version="0.2.0" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\AssetStudio\AssetStudio.PInvoke\AssetStudio.PInvoke.csproj" />
     <ProjectReference Include="..\AssetStudio\AssetStudioFBXWrapper\AssetStudioFBXWrapper.csproj" />
