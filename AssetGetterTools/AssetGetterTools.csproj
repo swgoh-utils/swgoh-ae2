@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,7 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Texture2DDecoderNative.dll" />
     <None Remove="x64\PCK_Tools_Native_win\bnkextr.exe" />
     <None Remove="x64\PCK_Tools_Native_win\ffmpeg.exe" />
     <None Remove="x64\PCK_Tools_Native_win\LICENSE.txt" />
@@ -23,7 +22,6 @@
     <None Remove="x64\PCK_Tools_Native_win\revorb.exe" />
     <None Remove="x64\PCK_Tools_Native_win\wavescan.bms" />
     <None Remove="x64\PCK_Tools_Native_win\ww2ogg.exe" />
-    <None Remove="x86\Texture2DDecoderNative.dll" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,22 +52,13 @@
     <EmbeddedResource Include="x64\PCK_Tools_Native_win\ww2ogg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="x64\Texture2DDecoderNative.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="x64\libTexture2DDecoderNative.so">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="x86\Texture2DDecoderNative.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="protobuf-net" Version="3.0.101" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="protobuf-net" Version="3.4.40" />
     <PackageReference Include="SevenZip" Version="19.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.7" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.14" />
   </ItemGroup>
 
   <ItemGroup>

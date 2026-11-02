@@ -24,7 +24,16 @@ module.exports = {
         "publishCmd": "./publishRelease.sh ${nextRelease.version}",
       }
     ],
-    "@semantic-release/github",
+    [
+      '@semantic-release/github',
+      {
+        assets: [
+          {
+            path: 'release-files/**/*'
+          }
+        ]
+      }
+    ],
     "@semantic-release/git",
   ],
 };

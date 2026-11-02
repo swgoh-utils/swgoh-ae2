@@ -205,7 +205,11 @@ namespace AssetGUI
             WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
 
 
-            StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+            var folder = await folderPicker.PickSingleFolderAsync();
+            if (folder == null)
+            {
+                return;
+            }
 
             tbExportPath.Text = folder.Path;
 

@@ -14,34 +14,65 @@ jobs:
       contents: write
       issues: write
       packages: write
+      pull-requests: write
+    needs: build-binaries
     name: Release
     runs-on: ubuntu-latest
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           persist-credentials: false
           submodules: recursive
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v7
         with:
           node-version: "lts/*"
       -
         name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v4
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v4
       -
         name: Login to GHCR
-        uses: docker/login-action@v2
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download Windows release files
+        uses: actions/download-artifact@v8
+        with:
+          name: release-files
+          path: release-files
+
       - run: npm ci
       - run: npx semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           CI_REGISTRY_IMAGE: ${{ env.REGISTRY }}/${{ github.repository }}
+  
+  build-binaries:
+    name: Build binaries
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: microsoft/setup-msbuild@v3
+
+      - name: Build all binaries
+        shell: pwsh
+        run: ./buildReleaseAssets
+      
+      - name: Upload release files
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-files
+          path: publish/zippedFiles/
+          if-no-files-found: error
+          retention-days: 30

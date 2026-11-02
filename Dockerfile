@@ -1,6 +1,6 @@
 # best practices from https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-6.0#the-dockerfile
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -19,7 +19,7 @@ COPY ["./", "./"]
 WORKDIR /source/AssetWebApi
 RUN dotnet publish "AssetWebApi.csproj" -c release -o /app/publish --no-restore
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0
+FROM mcr.microsoft.com/dotnet/sdk:10.0
 WORKDIR /app
 EXPOSE 80
 ENV DISABLE_HTTPS_REDIRECT="true"
@@ -31,7 +31,5 @@ RUN apt update && apt install -y \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /app/publish .
-COPY --from=build /app/publish/x64 /usr/share/dotnet/x64
-COPY --from=build /app/publish/x86 /usr/share/dotnet/x86
 
 ENTRYPOINT ["dotnet", "AssetWebApi.dll"]

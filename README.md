@@ -14,6 +14,11 @@ docker run --name=swgoh-ae2 \
   ghcr.io/swgoh-utils/swgoh-ae2:latest
 ```
 
+## Binary Download
+Binaries are provided in [GitHub Releases](https://github.com/swgoh-utils/swgoh-ae2/releases)
+The AssetGUI is for Windows only
+AssetWebAPI and SwgohAssetGetterConsoleStudio are portable builds that should work on most operating systems.
+
 ### Open API / Swagger file
 
 The swagger document is served at `/swagger` from the container

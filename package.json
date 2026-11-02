@@ -14,11 +14,11 @@
   "homepage": "https://github.com/swgoh-utils/swgoh-ae2#readme",
   "private": true,
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.2",
-    "@semantic-release/exec": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^8.0.7",
-    "conventional-changelog-conventionalcommits": "^5.0.0",
-    "semantic-release": "^19.0.3"
+    "@semantic-release/changelog": "^7.0.0",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^11.0.1",
+    "@semantic-release/github": "^12.0.10",
+    "conventional-changelog-conventionalcommits": "^10.4.1",
+    "semantic-release": "^25.0.9"
   }
 }

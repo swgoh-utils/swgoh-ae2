@@ -1,19 +1,25 @@
-﻿using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi;
+using System.Text.Json.Nodes;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace AssetWebApi.Extensions
 {
     public class EnumSchemaFilter : ISchemaFilter
     {
-        public void Apply(OpenApiSchema model, SchemaFilterContext context)
+        public void Apply(IOpenApiSchema schema, SchemaFilterContext context)
         {
-            if (context.Type.IsEnum)
+            if (!context.Type.IsEnum || schema is not OpenApiSchema model)
             {
-                model.Enum.Clear();
-                Enum.GetNames(context.Type)
-                    .ToList()
-                    .ForEach(name => model.Enum.Add(new OpenApiString($"{Convert.ToInt64(Enum.Parse(context.Type, name))} = {name}")));
+                return;
+            }
+
+            model.Enum?.Clear();
+
+            foreach (var name in Enum.GetNames(context.Type))
+            {
+                var value = Convert.ToInt64(Enum.Parse(context.Type, name));
+
+                model.Enum?.Add(JsonValue.Create($"{value} = {name}")!);
             }
         }
     }
